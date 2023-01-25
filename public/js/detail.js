@@ -1,6 +1,5 @@
 function see_details(data)
 {
-	console.log(data)
 	$('#name').html(data.name)
 	$('#image')[0].src = data.image
 	$('#type').html(data.type)

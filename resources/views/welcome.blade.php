@@ -4,6 +4,32 @@
         <article class="row d-flex justify-content-end">
             <section class="col-12 col-md-10 text-center">
                 <img src="{{ asset('images/logo.png') }}" class="w-50">
+                {{ Form::open(['route' => '/', 'method' => 'post']) }}
+                    <article class="row d-flex justify-content-center mt-4">
+                        <section class="col-12 col-md-6">
+                            <div class="row g-2">
+                                <div class="col-md">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Search" required name="search" id="search" value="{{ isset($search) ? $search : '' }}">
+                                        <label for="search">Search</label>
+                                    </div>
+                                </div>
+                                <div class="col-md">
+                                    <div class="form-floating">
+                                        <select class="form-select" required name="type-search" id="type-search">
+                                            <option value="name">Name</option>
+                                            <option value="status">Status</option>
+                                            <option value="species">Species</option>
+                                        </select>
+                                        <label for="type-search">Type Search</label>
+                                        <input type="hidden" id="type-search-search" value="{{ isset($type_search) ? $type_search : '' }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-sm btn-success mt-4">Search</button>
+                        </section>
+                    </article>
+                {{ Form::close() }}
                 @if(Session::has('sucess'))
                     <div class="alert alert-success" role="alert">
                         {{ Session::get('sucess') }}
@@ -41,7 +67,7 @@
                                         <a class="btn btn-info btn-sm see-detail-button" onclick="see_details({{ @json_encode($character) }})">
                                             See Details
                                         </a>
-                                        <a class="btn btn-info btn-sm">
+                                        <a class="btn btn-info btn-sm" onclick="edit_character({{ @json_encode($character) }})">
                                             Edit
                                         </a>
                                     </td>
@@ -50,7 +76,7 @@
                         </tbody>
                     </table>
                 </div>
-                {{ $characters->links('vendor.pagination.bootstrap-5') }}
+                {{ $characters->appends(['type-search' => $type_search, 'search' => $search])->links('vendor.pagination.bootstrap-5') }}
             </section>
             <section class="col-md-2 d-none d-md-block">
                 <article class="row">
@@ -59,6 +85,7 @@
                         <h6 class="mb-3 mt-3">Desarrolladora Laravel</h6>
                         <h6 class="mb-0">Natalia Alexandra Castellanos Quintana</h6>
                         @include('layouts.detail')
+                        @include('edit')
                     </section>
                 </article>
             </section>

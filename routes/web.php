@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\CharacterController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +16,7 @@ use App\Http\Controllers\WelcomeController;
 |
 */
 
-Route::get('/', [WelcomeController::class, 'view']);
-
+Route::get('/', [WelcomeController::class, 'all']);
+Route::post('/', [WelcomeController::class, 'search_view'])->name('/');
 Route::get('call', [ApiController::class, 'call_rick_morty'])->name('call');
+Route::post('edit/character', [CharacterController::class, 'edit'])->name('edit/character');
